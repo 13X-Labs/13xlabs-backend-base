@@ -40,22 +40,23 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+	'corsheaders',
 	'rest_framework',
 	'rest_framework.authtoken',
+	'rest_framework_simplejwt',
 	'djoser',
-	'corsheaders'
+	
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+	'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-	'corsheaders.middleware.CorsMiddleware',
-	'django.middleware.common.CommonMiddleware',
 ]
 
 ROOT_URLCONF = 'backend.urls'
@@ -135,36 +136,44 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-
-
 # https://www.django-rest-framework.org/#requirements
 REST_FRAMEWORK = {
     # Use Django's standard `django.contrib.auth` permissions,
     # or allow read-only access for unauthenticated users.
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly',
+		'rest_framework.permissions.IsAuthenticated',
+    ],
+	'DEFAULT_AUTHENTICATION_CLASSES': [
+		'rest_framework.authentication.BasicAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
 		'rest_framework.authentication.TokenAuthentication',
-
-    ]
+		'rest_framework_simplejwt.authentication.JWTAuthentication',
+	]
 }
 
 
-# https://www.stackhawk.com/blog/django-cors-guide/
+
+##############################
+########### CORS #############
+##############################
 CORS_ALLOW_ALL_ORIGINS = True
-
-CORS_ALLOWED_ORIGINS = [
-	"http://localhost:3000",
-	"http://localhost:8000",
-	"http://localhost",
-	"http://127.0.0.1"
-]
-
 CORS_REPLACE_HTTPS_REFERER = False
 CORS_ALLOW_CREDENTIALS = False
-CORS_PREFLIGHT_MAX_AGE = 86400 		# 24 hours
-CORS_ORIGIN_WHITELIST = []
-CORS_ALLOWED_ORIGIN_REGEXES = []
-CSRF_TRUSTED_ORIGINS = []
+CORS_PREFLIGHT_MAX_AGE = 86400 	# 24 hours
+CORS_URLS_REGEX = r"^/api/auth-token/.*$"
+CORS_ALLOWED_ORIGINS = [
+	'http://localhost:3000'
+]
+CORS_ORIGIN_WHITELIST = [
+	'http://localhost:3000'
+]
+CORS_ALLOWED_ORIGIN_REGEXES = [
+	'http://localhost:3000'
+]
+CSRF_TRUSTED_ORIGINS = [
+	'http://localhost:3000'
+]
 CORS_ALLOW_METHODS = [
 	'DELETE',
 	'GET',
@@ -183,5 +192,12 @@ CORS_ALLOW_HEADERS = [
 	'origin',
 	'user-agent',
 	'x-csrftoken',
-	'x-requested-with'
+	'x-requested-with',
+	'application/json',
+	'application/x-www-form-urlencoded',
+	# 'cookie' #Error 401 - CSRF Failed: CSRF token missing or incorrect.
 ]
+
+SIMPLE_JWT = {
+   'AUTH_HEADER_TYPES': ('JWT',),
+}
