@@ -193,8 +193,8 @@ CORS_ALLOW_HEADERS = [
 	'user-agent',
 	'x-csrftoken',
 	'x-requested-with',
-	'application/json',
-	'application/x-www-form-urlencoded',
+	# 'application/json',
+	# 'application/x-www-form-urlencoded',
 	# 'cookie' #Error 401 - CSRF Failed: CSRF token missing or incorrect.
 ]
 
