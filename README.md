@@ -1,5 +1,6 @@
 # 13XLabs
 
+"13xlabs-backend-base" refers to the foundational codebase used by the 13xlabs team for their backend operations. This codebase provides a starting point for building web applications and services, including authentication, database connections, and API endpoints. It is designed to be scalable and easily customizable for different projects.
 
 ## Install
 
