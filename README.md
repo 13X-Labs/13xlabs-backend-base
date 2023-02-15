@@ -31,3 +31,15 @@ $ python manage.py runserver
 ```bash
 $ pip freeze > requirements.txt
 ```
+
+### Create Superuser
+```bash
+$ python manage.py createsuperuser
+```
+
+### Migrations
+```bash
+$ python manage.py makemigrations --name <migration_name> <app_name>
+$ python manage.py migrate
+```
+

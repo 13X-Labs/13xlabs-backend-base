@@ -44,7 +44,10 @@ INSTALLED_APPS = [
 	'rest_framework',
 	'rest_framework.authtoken',
 	'rest_framework_simplejwt',
-	'djoser'
+	'djoser',
+
+
+	'article.apps.ArticleConfig', 
 ]
 
 MIDDLEWARE = [
@@ -56,6 +59,11 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
+	## Optional Language Middleware
+	'django.contrib.sessions.middleware.SessionMiddleware', 
+	'django.middleware.locale.LocaleMiddleware',
+	'django.middleware.common.CommonMiddleware',
 ]
 
 ROOT_URLCONF = 'backend.urls'
@@ -141,7 +149,7 @@ REST_FRAMEWORK = {
     # or allow read-only access for unauthenticated users.
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly',
-		'rest_framework.permissions.IsAuthenticated',
+		# 'rest_framework.permissions.IsAuthenticated',
     ],
 	'DEFAULT_AUTHENTICATION_CLASSES': [
 		'rest_framework.authentication.BasicAuthentication',
@@ -153,9 +161,9 @@ REST_FRAMEWORK = {
 
 
 
-##############################
-########### CORS #############
-##############################
+
+# CORS 
+
 CORS_ALLOW_ALL_ORIGINS = True
 CORS_REPLACE_HTTPS_REFERER = False
 CORS_ALLOW_CREDENTIALS = False

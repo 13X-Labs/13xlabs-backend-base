@@ -20,9 +20,11 @@ from django.contrib import admin
 from django.urls import path, include
 from rest_framework.authtoken import views
 
+
 urlpatterns = [
     path('admin/', admin.site.urls),
 	path(r'api/auth-token/', include('djoser.urls')),
 	path(r'api/auth-token/', include('djoser.urls.authtoken')),
-	path(r'api/auth-token/', include('djoser.urls.jwt'))
+	path(r'api/auth-token/', include('djoser.urls.jwt')),
+	path(r'api/', include('article.urls')),
 ]
