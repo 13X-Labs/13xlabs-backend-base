@@ -23,6 +23,7 @@ from rest_framework.authtoken import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('ckeditor/', include('ckeditor_uploader.urls')),
 	path(r'api/auth-token/', include('djoser.urls')),
 	path(r'api/auth-token/', include('djoser.urls.authtoken')),
 	path(r'api/auth-token/', include('djoser.urls.jwt')),

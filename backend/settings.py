@@ -47,6 +47,7 @@ INSTALLED_APPS = [
 	'djoser',
 	'mptt',
 	'storages',
+    'ckeditor',
 
 	'article.apps.ArticleConfig', 
 ]
@@ -174,7 +175,18 @@ CACHES = {
     }
 }
 
+# CKEditor
+# https://django-ckeditor.readthedocs.io/en/latest/#installation
 
+CKEDITOR_BASEPATH = "/static/ckeditor/ckeditor/"
+CKEDITOR_UPLOAD_PATH = "ckeditor/uploads/"
+CKEDITOR_FILENAME_GENERATOR = 'utils.get_filename'
+
+CKEDITOR_CONFIGS = {
+    'awesome_ckeditor': {
+        'toolbar': 'Basic',
+    },
+}
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
