@@ -263,7 +263,7 @@ CORS_ALLOW_ALL_ORIGINS = True
 CORS_REPLACE_HTTPS_REFERER = False
 CORS_ALLOW_CREDENTIALS = False
 CORS_PREFLIGHT_MAX_AGE = 86400 	# 24 hours
-CORS_URLS_REGEX = r"^/api/auth-token/.*$"
+CORS_URLS_REGEX = r"^/api.*$"
 CORS_ALLOWED_ORIGINS = [
 	'http://localhost:3000',
 	'http://oss-ap-southeast-1.aliyuncs.com',
