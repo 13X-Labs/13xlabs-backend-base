@@ -48,6 +48,7 @@ INSTALLED_APPS = [
 	'mptt',
 	'storages',
     'ckeditor',
+	'ckeditor_uploader',
 
 	'article.apps.ArticleConfig', 
 ]
@@ -156,6 +157,7 @@ AWS_S3_SIGNATURE_VERSION = 's3v4'
 AWS_DEFAULT_ACL = 'public-read'
 AWS_QUERYSTRING_EXPIRE = 3600
 AWS_IS_GZIPPED = False
+AWS_QUERYSTRING_AUTH = False
 AWS_S3_REGION_NAME = config('AWS_S3_REGION_NAME')
 AWS_S3_CUSTOM_DOMAIN = config('AWS_S3_CUSTOM_DOMAIN')
 
@@ -178,13 +180,56 @@ CACHES = {
 # CKEditor
 # https://django-ckeditor.readthedocs.io/en/latest/#installation
 
-CKEDITOR_BASEPATH = "/static/ckeditor/ckeditor/"
-CKEDITOR_UPLOAD_PATH = "ckeditor/uploads/"
+CKEDITOR_BASEPATH = "https://oss.13xlabs.com/19418599-ngochai/static/ckeditor/ckeditor/"
+CKEDITOR_UPLOAD_PATH = "https://oss.13xlabs.com/19418599-ngochai/ckeditor/uploads/"
 CKEDITOR_FILENAME_GENERATOR = 'utils.get_filename'
+X_FRAME_OPTIONS = 'CKEDITOR_CONFIGS'
 
 CKEDITOR_CONFIGS = {
-    'awesome_ckeditor': {
+    'default': {
         'toolbar': 'Basic',
+		'skin': 'moono-lisa',
+		'toolbar_Basic': [
+            {'name': 'document', 'items': ['Source', '-', 'Save', 'NewPage', 'Preview', 'Print', '-', 'Templates']},
+            {'name': 'clipboard', 'items': ['Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-', 'Undo', 'Redo']},
+            {'name': 'editing', 'items': ['Find', 'Replace', '-', 'SelectAll']},
+            {'name': 'forms',
+             'items': ['Form', 'Checkbox', 'Radio', 'TextField', 'Textarea', 'Select', 'Button', 'ImageButton',
+                       'HiddenField']},
+            '/',
+            {'name': 'basicstyles',
+             'items': ['Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript', '-', 'RemoveFormat']},
+            {'name': 'paragraph',
+             'items': ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'Blockquote', 'CreateDiv', '-',
+                       'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-', 'BidiLtr', 'BidiRtl',
+                       'Language']},
+            {'name': 'links', 'items': ['Link', 'Unlink', 'Anchor']},
+            {'name': 'insert',
+             'items': ['Image', 'Flash', 'Table', 'HorizontalRule', 'Smiley', 'SpecialChar', 'PageBreak', 'Iframe']},
+            '/',
+            {'name': 'styles', 'items': ['Styles', 'Format', 'Font', 'FontSize']},
+            {'name': 'colors', 'items': ['TextColor', 'BGColor']},
+            {'name': 'tools', 'items': ['Maximize', 'ShowBlocks']},
+            {'name': 'about', 'items': ['About']},
+        ],
+		'tabSpaces': 4,
+        'extraPlugins': ','.join([
+            'uploadimage', # the upload image feature
+            # your extra plugins here
+            'div',
+            'autolink',
+            'autoembed',
+            'embedsemantic',
+            'autogrow',
+            # 'devtools',
+            'widget',
+            'lineutils',
+            'clipboard',
+            'dialog',
+            'dialogui',
+            'elementspath'
+        ]),
+		"removePlugins": "stylesheetparser",
     },
 }
 

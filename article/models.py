@@ -29,7 +29,7 @@ class Article(models.Model):
 	slug = models.SlugField(max_length=120, verbose_name='Slug')
 	background = models.ImageField(upload_to='article/images', verbose_name='Background Image')
 	description = models.CharField(max_length=120, verbose_name='Description')
-	content = RichTextField(config_name='awesome_ckeditor', verbose_name='Content')
+	content = RichTextField(config_name='default', verbose_name='Content')
 	attachment = models.FileField(upload_to='article/files', verbose_name='Attachment')
 	uploadtime = models.DateField(auto_now_add=True, verbose_name='Upload Time')
 	active = models.BooleanField(default=True, verbose_name='Active')
