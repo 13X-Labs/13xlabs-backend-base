@@ -8,6 +8,7 @@ class ArticleAdmin(admin.ModelAdmin):
 	list_display = ('title', 'content', 'active')
 	list_filter = ('active', 'title')
 	search_fields = ('title', 'content')
+	prepopulated_fields = {"slug": ("title",)}
 
 @admin.register(Category)
 class CategoryAdmin(MPTTModelAdmin):
