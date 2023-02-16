@@ -46,6 +46,7 @@ INSTALLED_APPS = [
 	'rest_framework_simplejwt',
 	'djoser',
 	'mptt',
+	'storages',
 
 	'article.apps.ArticleConfig', 
 ]
@@ -141,8 +142,39 @@ LOCALE_PATHS = (
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
+STATICFILES_FINDERS = (
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+)
+
+AWS_ACCESS_KEY_ID = config('AWS_ACCESS_KEY_ID')
+AWS_SECRET_ACCESS_KEY = config('AWS_SECRET_ACCESS_KEY')
+AWS_STORAGE_BUCKET_NAME = config('AWS_STORAGE_BUCKET_NAME')
+AWS_S3_ENDPOINT_URL = config('AWS_S3_ENDPOINT_URL')
+AWS_S3_SIGNATURE_VERSION = 's3v4'
+AWS_DEFAULT_ACL = 'public-read'
+AWS_QUERYSTRING_EXPIRE = 3600
+AWS_IS_GZIPPED = False
+AWS_S3_REGION_NAME = config('AWS_S3_REGION_NAME')
+AWS_S3_CUSTOM_DOMAIN = config('AWS_S3_CUSTOM_DOMAIN')
+
+AWS_LOCATION = 'static'
+STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3StaticStorage'
 
 STATIC_URL = 'static/'
+MEDIA_URL = 'media/'
+STATIC_ROOT = 'static/'
+
+
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
+        'LOCATION': Path(__file__).resolve().parent.parent / 'tmp',
+    }
+}
+
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
@@ -176,16 +208,24 @@ CORS_ALLOW_CREDENTIALS = False
 CORS_PREFLIGHT_MAX_AGE = 86400 	# 24 hours
 CORS_URLS_REGEX = r"^/api/auth-token/.*$"
 CORS_ALLOWED_ORIGINS = [
-	'http://localhost:3000'
+	'http://localhost:3000',
+	'http://oss-ap-southeast-1.aliyuncs.com',
+	'https://oss-ap-southeast-1.aliyuncs.com',
 ]
 CORS_ORIGIN_WHITELIST = [
-	'http://localhost:3000'
+	'http://localhost:3000',
+	'http://oss-ap-southeast-1.aliyuncs.com',
+	'https://oss-ap-southeast-1.aliyuncs.com',
 ]
 CORS_ALLOWED_ORIGIN_REGEXES = [
-	'http://localhost:3000'
+	'http://localhost:3000',
+	'http://oss-ap-southeast-1.aliyuncs.com',
+	'https://oss-ap-southeast-1.aliyuncs.com',
 ]
 CSRF_TRUSTED_ORIGINS = [
-	'http://localhost:3000'
+	'http://localhost:3000',
+	'http://oss-ap-southeast-1.aliyuncs.com',
+	'https://oss-ap-southeast-1.aliyuncs.com',
 ]
 CORS_ALLOW_METHODS = [
 	'DELETE',
@@ -206,9 +246,6 @@ CORS_ALLOW_HEADERS = [
 	'user-agent',
 	'x-csrftoken',
 	'x-requested-with',
-	# 'application/json',
-	# 'application/x-www-form-urlencoded',
-	# 'cookie' #Error 401 - CSRF Failed: CSRF token missing or incorrect.
 ]
 
 SIMPLE_JWT = {
